@@ -17,6 +17,7 @@ export const UserProfileCard = (props:IUserServiceProps):JSX.Element =>{
                         hidePersonaDetails={false}
                         tertiaryText={ props.Department }
                         size={15} >
+                        <strong>{props.Birthday01}</strong>
                         </Persona>
                 </div>
                 </div>
