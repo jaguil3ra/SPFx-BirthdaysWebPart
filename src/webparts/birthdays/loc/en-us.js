@@ -2,7 +2,7 @@ define([], function() {
   return {
     "Title":"Birthdays",
     "PropertyPaneDescription": "Birthday Configuration",
-    "BasicGroupName": "Properties",
+    "BasicGroupName": "Profile Properties",
     "DescriptionPropertyTitle": "Title",
     "DescriptionPropertyShowPhone":"Show phone",
     "DescriptionPropertyShowDepartament":"Show departament",
@@ -10,6 +10,10 @@ define([], function() {
     "DescriptionPropertyPersonaSize":"Size Picture",
     "OptionSizeShort":"Short",
     "OptionSizeMedium":"Medium",
-    "OptionSizeLarge":"Large"
+    "OptionSizeLarge":"Large",
+    "CreditDescription":"Click here for more information",
+    "ButtonToday":"Today",
+    "ButtonWeek":"Week",
+    "ButtonMore":"See More"
   }
 });

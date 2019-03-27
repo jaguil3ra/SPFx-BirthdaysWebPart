@@ -12,6 +12,7 @@ import {
 } from '@microsoft/sp-webpart-base';
 //import { PropertyFieldCollectionData, CustomCollectionFieldType } from '@pnp/spfx-property-controls/lib/PropertyFieldCollectionData';
 
+import  PropertyPaneCredits from './PropertyPanelCredits'
 import * as strings from 'BirthdaysWebPartStrings';
 import Birthdays from './components/Birthdays';
 import { IBirthdaysWebProps,IBirthdaysProps } from './components/IBirthdaysProps';
@@ -20,12 +21,12 @@ import { IBirthdaysWebProps,IBirthdaysProps } from './components/IBirthdaysProps
 export default class BirthdaysWebPart extends BaseClientSideWebPart<IBirthdaysWebProps> {
   
   public render(): void {
-    console.log(this.context.pageContext.cultureInfo);
     const element: React.ReactElement<IBirthdaysProps> = React.createElement(
       Birthdays,
       {
         birthdayProps: this.properties,
-        spHttp: this.context.spHttpClient
+        spHttp: this.context.spHttpClient,
+        _pageContext:this.context.pageContext
       }
     );
 
@@ -84,10 +85,35 @@ export default class BirthdaysWebPart extends BaseClientSideWebPart<IBirthdaysWe
                 PropertyPaneCheckbox('showJobTitle', {
                   text: strings.DescriptionPropertyShowJobTitle,
                   checked:false
-                }),                                                 
+                }),   
+                new PropertyPaneCredits()                                              
+              ]
+            },
+            {
+              groupName: 'More Birthdays',
+              groupFields: [
+                PropertyPaneDropdown('Agrupacion',{
+                  label: 'Agrupación',
+                  selectedKey:1,
+                  options:[
+                    {
+                      key:1,
+                      text:"Diario"
+                    },
+                    {
+                      key:2,
+                      text:"Semanal"
+                    },
+                    {
+                      key:3,
+                      text:"Mensual"
+                    }                                        
+                  ]
+                })
               ]
             }
-          ]
+          ],
+          
         }
       ]
     };

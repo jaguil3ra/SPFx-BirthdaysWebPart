@@ -9,44 +9,86 @@ import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import  { BirthdayModal } from './BirthdaysModal';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import {IUserServiceProps} from './IBirthdaysProps';
+import {  Range } from '../components/IBirthdaysProps';
+import * as strings from 'BirthdaysWebPartStrings';
+import * as moment from 'moment';
 export default class Birthdays extends React.Component<IBirthdaysProps, {}> {
   
   constructor(props){
     super(props)
-    this._loadUsers();
+    this._loadUsers(Range.Year);
     this._openModal = this._openModal.bind(this);
     this._hideModal = this._hideModal.bind(this);
+    this._changeMonth = this._changeMonth.bind(this);
+    this._changeToWeek = this._changeToWeek.bind(this);
+    this._changeToday = this._changeToday.bind(this);
   }
   state ={
     personsToday:Array<IUserServiceProps>(),
-    personsByRange:Array<IUserServiceProps>(),
+    personsWeek:Array<IUserServiceProps>(),
+    personsMonth:Array<IUserServiceProps>(),
+    month:moment().month(),
+    isToday:true,
     showModal:false,
     isLoad:false,
+    isLoadModal:false
   };
-  private _loadUsers = ():void=>{
+  private _loadUsers = (range:Range,month?:number):void=>{
     getUserBySearch(this.props.spHttp, (items:Array<IUserServiceProps>)=>{ 
-      this.setState({ personsToday:items,isLoad:true});      
-    });    
+      items = items.sort((a,b) => (a.Birthday01 > b.Birthday01) ? 1 : ((b.Birthday01 > a.Birthday01) ? -1 : 0))
+      if(range == Range.Year){
+        this.setState({ 
+          personsToday:items,
+          personsWeek:items,
+          isLoad:true});      
+      }else{
+        this.setState({ 
+          personsMonth:items,
+          isLoadModal:true
+        })
+      }
+    }, range, month);    
   }
   private _openModal =():void=> {
     this.setState({
       showModal:true
     })
+    this._loadUsers(Range.Month,this.state.month)
   }
   private _hideModal =():void=> {
     this.setState({
       showModal:false
     })
   }
+  private _changeToWeek =():void=>{
+
+    this.setState({
+      isToday: false
+    })
+  }
+  private _changeToday =():void=>{
+
+    this.setState({
+      isToday: true
+    })
+  }
+
+  private _changeMonth =(monthNumber:number):void=>{
+    this.setState({
+      month:monthNumber
+    })
+    this._loadUsers(Range.Month,monthNumber)
+  }
   
   public render(): React.ReactElement<IBirthdaysProps> {
     let spiner = !this.state.isLoad ? <div>
-              <Spinner size={SpinnerSize.large} label="Sorry, still loading..." ariaLive="assertive" /*labelPosition="top"*/ /> 
+              <Spinner size={SpinnerSize.large} label="Sorry, still loading..." ariaLive="assertive" /> 
     </div>:"";
-    let persons = this.state.personsToday.map((item:IUserServiceProps,i:number)=>{
+    let pernsonRender = this.state.isToday? this.state.personsToday: this.state.personsWeek;
+    let persons = pernsonRender.map((item:IUserServiceProps,i:number)=>{
       return  <Persona className={customStyles["persona-item"]}
       key={i}
-      imageUrl={"/_layouts/userphoto.aspx?size=L&accountname="+item.WorkEmail }
+      imageUrl={ item.PictureURL}
       text={item.Title}
       secondaryText={item.JobTitle ? item.JobTitle: ""}
       hidePersonaDetails={false}
@@ -70,10 +112,21 @@ export default class Birthdays extends React.Component<IBirthdaysProps, {}> {
               {persons}
             </div>
           </div>    
-          <div >
-            <BirthdayModal _showModal={this.state.showModal} _openModal={this._openModal} _hideModal={this._hideModal}  _persons={this.state.personsToday} ></BirthdayModal>
-          </div>                
+          <div className="ms-Grid-col ms-sm12">
+            <div className={customStyles["bar-secondary"]}>
+              <div className="ms-Grid">
+                  <div className="ms-Grid-col ms-sm6">
+                  <Button className={customStyles.light} style={{marginRight:"20px"}} onClick={()=>{this._changeToday()}}  ><Icon iconName="GotoToday" /> {strings.ButtonToday} </Button>
+                  <Button className={customStyles.light}  onClick={()=>{ this._changeToWeek()}}><Icon iconName="CalendarWeek" /> {strings.ButtonWeek}</Button>              
+                  </div>
+                  <div className="ms-Grid-col ms-sm6">
+                    <Button className={customStyles.light}  style={ {float:"right"}} onClick={()=>{ this._openModal() }} > <Icon iconName="ShowResults"></Icon> {strings.ButtonMore}</Button>
+                  </div>                
+              </div>
+            </div>  
+          </div>  
         </div>
+        <BirthdayModal _showModal={this.state.showModal} _openModal={this._openModal} _hideModal={this._hideModal}  _persons={this.state.personsMonth} ></BirthdayModal>
       </div>
     );
   }

@@ -17,6 +17,7 @@
     max-height: 500px;
   }
 
+
 }
 .containerModal{
   width: 90%
@@ -61,4 +62,7 @@
   @import '../../../../node_modules/office-ui-fabric/dist/sass/Fabric.Animations.Output';  // Responsive
   @import '../../../../node_modules/office-ui-fabric/dist/sass/Fabric.Responsive.Variables';
   @import '../../../../node_modules/office-ui-fabric/dist/components/PersonaCard/PersonaCard.scss';
+  .hide{
+    display: none
+  }
 }

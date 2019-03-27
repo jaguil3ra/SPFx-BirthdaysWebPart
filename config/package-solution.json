@@ -7,6 +7,6 @@
     "includeClientSideAssets": true
   },
   "paths": {
-    "zippedPackage": "solution/web-parts-utils.sppkg"
+    "zippedPackage": "solution/WebPartUtils.sppkg"
   }
 }

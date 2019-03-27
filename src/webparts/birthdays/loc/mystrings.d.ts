@@ -9,7 +9,11 @@ declare interface IBirthdaysWebPartStrings {
   OptionSizeShort:string,
   OptionSizeMedium:string,
   OptionSizeLarge:string,
-  Title:string;
+  Title:string,
+  CreditDescription:string,
+  ButtonToday:string,
+  ButtonWeek:string,
+  ButtonMore:string
 }
 
 declare module 'BirthdaysWebPartStrings' {

@@ -2,7 +2,27 @@ import { SPHttpClient } from '@microsoft/sp-http'
 
 export interface IBirthdaysProps {
   birthdayProps:IBirthdaysWebProps;
-  spHttp:SPHttpClient
+  spHttp:SPHttpClient,
+  _pageContext:{
+    cultureInfo:{
+      _currentCultureName:string
+    },
+    site:{
+      absoluteUrl:string,
+      _isNoScriptEnabled:boolean
+    },
+    web:{
+      absoluteUrl:string,
+      language:number,
+      logoUrl:string,
+    },
+    user:{
+      displayName:string,
+      email:string,
+      loginName:string,
+    }
+    
+  }
 }
 
 export interface IBirthdaysWebProps {
@@ -33,6 +53,12 @@ export interface IUserServiceProps{
   WorkPhone?:string;
   RefinableDate00?:Date;
   RefinableDate01?:Date;
+  PictureURL:string,
 }
 
+export enum Range{
+  Week,
+  Month,
+  Year
+}
 

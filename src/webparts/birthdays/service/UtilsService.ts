@@ -1,15 +1,26 @@
 import { SPHttpClient, SPHttpClientResponse,ISPHttpClientOptions } from '@microsoft/sp-http';
-type clousere = (items:Array<any>)=>void;
+import {  Range } from '../components/IBirthdaysProps';
+type Clousere = (items:Array<any>)=>void;
 import * as moment from 'moment';
- //'node_modules/office-ui.fabric/fabric-9.6.0.scoped.min'
+
+
+
+
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
-export const getUserBySearch = (sphttp:SPHttpClient,callback:clousere):void=> {
-    console.log(moment().year(2000).date(1).month(0).toISOString());
+export const getUserBySearch = (sphttp:SPHttpClient,callback:Clousere, period:Range, month?:number ):void=> {
+    let currentRange:string;
+    if(period == Range.Week){
+      currentRange = "RefinableDate00>="+moment().day(0).year(2000).toISOString()+" AND RefinableDate00<="+moment().day(6).year(2000).toISOString()
+    }else if (period == Range.Month){
+      currentRange = "RefinableDate00>="+moment().month(month).date(1).year(2000).toISOString()+" AND RefinableDate00<="+moment().month(month).endOf('month').year(2000).toISOString()
+    }else{
+      currentRange = "RefinableDate00>="+moment().year(2000).day(1).month(1).toISOString()+" AND RefinableDate00<="+moment().year(2000).date(31).month(11).toISOString()
+    }
     const spOpts: ISPHttpClientOptions = {
         body: JSON.stringify({
           request: {
                 SourceId:'B09A7990-05EA-4AF9-81EF-EDFAB16C4E31',
-                Querytext:"RefinableDate00>="+moment().year(2000).day(1).month(1).toISOString()+" AND RefinableDate00<="+moment().year(2000).date(31).month(11).toISOString(),
+                Querytext:currentRange,
                 RowLimit:1000,
                 SelectProperties: [
                     "PictureURL",
@@ -38,6 +49,12 @@ export const getUserBySearch = (sphttp:SPHttpClient,callback:clousere):void=> {
               var temp = {};
             elemento.Cells.forEach((act, i)=>{
               temp[act.Key] = act.Value
+              if(act.Key == "WorkEmail"){
+                temp["PictureURL"] = "/_layouts/userphoto.aspx?size=L&accountname="+act.Value
+              }
+              if(act.Key == "Birthday01"){
+                temp[act.Key] = moment(act.Value).year(moment().year()).toLocaleString()
+              }
             })
             MyLista.push(temp)
           })
@@ -46,67 +63,45 @@ export const getUserBySearch = (sphttp:SPHttpClient,callback:clousere):void=> {
         });
       })
     }else{
-      setTimeout(()=>{
-        callback([
-          {
-            Birthday01:"10/16/2000 12:00:00 AM",
-            Title:"Jose Aguilera",
-            JobTitle:"Consultor SharePoint",
-            WorkEmail:"dl_jose5@hotmail.com",
-            WorkPhone:"99999999"
-          },
-          {
-            Birthday01:"10/16/2000 12:00:00 AM",
-            Title:"Inocencia Yepez",
-            JobTitle:"Gerente General",
-            WorkEmail:"inocencia@hotmail.com",
-            WorkPhone:"99999999"
-          },
-          {
-            Birthday01:"15/03/2000 12:00:00 AM",
-            Title:"Sonia Ramirez",
-            JobTitle:"Gerente RRHHH",
-            WorkEmail:"sonia@hotmail.com",
-            WorkPhone:"99999999"
-          },
-          {
-            Birthday01:"21/07/2000 12:00:00 AM",
-            Title:"Li Aguilera",
-            JobTitle:"Presidenta",
-            WorkEmail:"Li Aguilera@hotmail.com",
-            WorkPhone:"99999999"
-          },
-          {
-            Birthday01:"10/16/2000 12:00:00 AM",
-            Title:"Jose Aguilera",
-            JobTitle:"Consultor SharePoint",
-            WorkEmail:"dl_jose51@hotmail.com",
-            WorkPhone:"99999999"
-          },
-          {
-            Birthday01:"10/16/2000 12:00:00 AM",
-            Title:"Inocencia Yepez",
-            JobTitle:"Gerente General",
-            WorkEmail:"inocencia1@hotmail.com",
-            WorkPhone:"99999999"
-          },
-          {
-            Birthday01:"15/03/2000 12:00:00 AM",
-            Title:"Sonia Ramirez",
-            JobTitle:"Gerente RRHHH",
-            WorkEmail:"sonia1@hotmail.com",
-            WorkPhone:"99999999"
-          },
-          {
-            Birthday01:"21/07/2000 12:00:00 AM",
-            Title:"Li Aguilera",
-            JobTitle:"Presidenta",
-            WorkEmail:"Li Aguilera1@hotmail.com",
-            WorkPhone:"99999999"
-          }
-        ])
-      },1000)
-    }
+      let page = month? month+1 : 13;
+      sphttp.get("https://gorest.co.in/public-api/users?page="+page+"&_format=json&access-token=sBFgU5pW0SdEGU3kuTLEtSD3JGZlsvZlzKoY",SPHttpClient.configurations.v1).then((response: SPHttpClientResponse)=>{
+        response.json().then((responseJSON: any) => {
+          console.log(responseJSON.result);
+          let MyLista = responseJSON.result.map((e)=>{ return{
+            Birthday01: month ? moment().date(Math.floor(Math.random()*30) +1).month(moment().month()).toISOString() :moment().startOf('week').add(Math.floor(Math.random()*7),"day").month(moment().month()).toISOString() ,
+            PictureURL:e._links.avatar.href,
+            WorkEmail:e.email,
+            Title:e.name,
+            HireDate01:e.dob,
+            WorkPhone:e.phone,
+            JobTitle:JobElements.pop()
+          }})
+          callback(MyLista)
+        });
+      })
+    }   
 }
+
+let JobElements = [
+  "Developer Senior",
+  "Developer Junior",
+  "Technical Consultant",
+  "Functional Consultant",
+  "Developer Junio",
+  "Technical Support",
+  "Recluter",
+  "Telemarketing",
+  "Chief Technology",
+  "Technical Support",
+  "Developer Senior",
+  "Functional Consultant",
+  "Finantial Controller",
+  "Adoption Management",
+  "Product Manager",
+  "Marketing Manager",
+  "Sales",
+  "Adoption Management",
+  "Telemarketing",
+]
 
 

@@ -2,7 +2,7 @@ define([], function() {
     return {
       "Title":"Cumpleaños",
       "PropertyPaneDescription": "Configuración de Cumpleaños",
-      "BasicGroupName": "Propiedades",
+      "BasicGroupName": "Propiedades del Perfil",
       "DescriptionPropertyTitle": "Título",
       "DescriptionPropertyShowPhone":"Mostrar telefono",
       "DescriptionPropertyShowDepartament":"Mostrar departamento",
@@ -10,6 +10,10 @@ define([], function() {
       "DescriptionPropertyPersonaSize":"Tamaño de la Foto",
       "OptionSizeShort":"Pequeño",
       "OptionSizeMedium":"Mediano",
-      "OptionSizeLarge":"Grande"
+      "OptionSizeLarge":"Grande",
+      "CreditDescription":"Click para información",
+      "ButtonToday":"Hoy",
+      "ButtonWeek":"Esta semana",
+      "ButtonMore":"Ver más"
     }
   });
