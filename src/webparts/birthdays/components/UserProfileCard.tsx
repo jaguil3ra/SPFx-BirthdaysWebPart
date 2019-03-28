@@ -50,8 +50,7 @@ export class UserProfileCard extends React.Component<IUserServiceProps, {}>{
                             secondaryText={this.props.JobTitle}
                             hidePersonaDetails={false}
                             tertiaryText={ this.props.Department }
-                            size={15} >
-                            <strong>{this.props.Birthday01}</strong>
+                            size={14} >
                             </Persona>
                     </div>
                     </div>
@@ -65,25 +64,25 @@ export class UserProfileCard extends React.Component<IUserServiceProps, {}>{
                     <li onClick={()=>{ this._showMail() }} className={customStyles['ms-PersonaCard-action'] +" "+ (this.state.email ? customStyles['is-active']: "")} >
                         <Icon iconName="Mail" />
                     </li>
-                    <li className={customStyles["ms-PersonaCard-overflow"]} title="View profile in Delve">View profile</li>
+                    <li className={customStyles["ms-PersonaCard-overflow"]} title="View profile in Delve"><a target="_blank" href={"/_layouts/15/me.aspx/?p="+this.props.WorkEmail}>View profile</a></li>
                     </ul>
                     <div className={customStyles['ms-PersonaCard-actionDetailBox']}>
                         <ul id="detailList" className={customStyles['ms-PersonaCard-detailChat']}>
                             <li  className={customStyles['ms-PersonaCard-actionDetails'] +" "+ (this.state.teams ? customStyles['is-active']: customStyles['hide'])}>
                                 <div className={customStyles['ms-PersonaCard-detailLine']}>
                                     <span className={customStyles['ms-PersonaCard-detailLabel']}>Skype: </span> 
-                                    <a className={customStyles['ms-Link']} href="#">Teams an IM chat</a>
+                                    <a className={customStyles['ms-Link']} target="_blank" href={"sip:"+this.props.WorkEmail }>Teams</a>
                                 </div>
                             </li>
                             <li  className={customStyles['ms-PersonaCard-actionDetails'] +" "+ (this.state.phone ? customStyles['is-active']: customStyles['hide'])}>
                                 <div className={customStyles['ms-PersonaCard-detailLine']}>
-                                    <span className={customStyles['ms-PersonaCard-detailLabel']}>Work: </span>{this.props.WorkPhone}
+                                    <span  className={customStyles['ms-PersonaCard-detailLabel']}>Work: </span>{this.props.WorkPhone}
                                 </div>
                             </li>
                             <li  className={customStyles['ms-PersonaCard-actionDetails'] +" "+ (this.state.email ? customStyles['is-active']: customStyles['hide'])}>
                                 <div className={customStyles['ms-PersonaCard-detailLine']}>
-                                    <span className={customStyles['ms-PersonaCard-detailLabel']}>Work: </span> 
-                                    <a className={customStyles['ms-Link']} href="mailto:{props.email}">{this.props.WorkEmail}</a>
+                                    <span className={customStyles['ms-PersonaCard-detailLabel']}>Email: </span> 
+                                    <a className={customStyles['ms-Link']}  href={"mailto:"+this.props.WorkEmail}>{this.props.WorkEmail}</a>
                                 </div>
                             </li>                            
                         </ul>

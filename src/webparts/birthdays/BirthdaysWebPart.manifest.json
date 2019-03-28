@@ -21,7 +21,8 @@
     "officeFabricIconFontName": "BirthdayCake",
     "properties": {
       "title": "Birthdays",
-      "pictureSize":14
+      "pictureSize":14,
+      "showJobTitle":true
     }
   }]
 }

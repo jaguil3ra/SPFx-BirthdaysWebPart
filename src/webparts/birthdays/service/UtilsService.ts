@@ -8,6 +8,7 @@ import * as moment from 'moment';
 
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 export const getUserBySearch = (sphttp:SPHttpClient,callback:Clousere, period:Range, month?:number ):void=> {
+    
     let currentRange:string;
     if(period == Range.Week){
       currentRange = "RefinableDate00>="+moment().day(0).year(2000).toISOString()+" AND RefinableDate00<="+moment().day(6).year(2000).toISOString()
@@ -63,45 +64,49 @@ export const getUserBySearch = (sphttp:SPHttpClient,callback:Clousere, period:Ra
         });
       })
     }else{
+      const MockupElements = [
+        { job: "Developer Senior",dep: "PMO"},
+        { job: "Developer Junior",dep: "PMO"},
+        { job: "Technical Consultant",dep: "PMO"},
+        { job: "Functional Consultant",dep: "PMO"},
+        { job: "Developer Junio",dep: "PMO"},
+        { job: "Technical Support",dep: "Support"},
+        { job: "Recluter",dep: "Human Resources"},
+        { job: "Telemarketing",dep: "Sales"},
+        { job: "Chief Technology",dep: "Directory"},
+        { job: "Technical Support",dep: "Support"},
+        { job: "Functional Consultant",dep: "PMO"},
+        { job: "Finantial Controller",dep: "Finantial"},
+        { job: "Adoption Management",dep: "Adoption"},
+        { job: "Product Manager",dep: "Sales Terrirory"},
+        { job: "Marketing Manager",dep: "Marketing"},
+        { job: "Sales",dep: "Sales"},
+        { job: "Adoption Management",dep: "Adoption"},
+        { job: "Etichal Hacking",dep: "SEcurity Compliance"},
+        { job: "Networks Support",dep: "Infrastructure"},
+        { job: "Telemarketing",dep: "Sales"},
+        { job: "Developer Senior",dep: "PMO"},
+      ]      
       let page = month? month+1 : 13;
       sphttp.get("https://gorest.co.in/public-api/users?page="+page+"&_format=json&access-token=sBFgU5pW0SdEGU3kuTLEtSD3JGZlsvZlzKoY",SPHttpClient.configurations.v1).then((response: SPHttpClientResponse)=>{
         response.json().then((responseJSON: any) => {
-          console.log(responseJSON.result);
-          let MyLista = responseJSON.result.map((e)=>{ return{
-            Birthday01: month ? moment().date(Math.floor(Math.random()*30) +1).month(moment().month()).toISOString() :moment().startOf('week').add(Math.floor(Math.random()*7),"day").month(moment().month()).toISOString() ,
+          let MyLista = responseJSON.result.map((e)=>{ 
+            let mokup = MockupElements.pop();
+            return{
+            Birthday01: month 
+            ? moment().month(month).date(Math.floor(Math.random()*30) +1).toISOString() 
+            :moment().startOf('week').add(Math.floor(Math.random()*7),"day").month(moment().month()).toISOString() ,
             PictureURL:e._links.avatar.href,
             WorkEmail:e.email,
             Title:e.name,
             HireDate01:e.dob,
             WorkPhone:e.phone,
-            JobTitle:JobElements.pop()
+            JobTitle:mokup.job,
+            Department:mokup.dep
           }})
           callback(MyLista)
         });
       })
     }   
 }
-
-let JobElements = [
-  "Developer Senior",
-  "Developer Junior",
-  "Technical Consultant",
-  "Functional Consultant",
-  "Developer Junio",
-  "Technical Support",
-  "Recluter",
-  "Telemarketing",
-  "Chief Technology",
-  "Technical Support",
-  "Developer Senior",
-  "Functional Consultant",
-  "Finantial Controller",
-  "Adoption Management",
-  "Product Manager",
-  "Marketing Manager",
-  "Sales",
-  "Adoption Management",
-  "Telemarketing",
-]
-
 

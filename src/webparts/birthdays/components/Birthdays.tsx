@@ -27,6 +27,7 @@ export default class Birthdays extends React.Component<IBirthdaysProps, {}> {
     personsToday:Array<IUserServiceProps>(),
     personsWeek:Array<IUserServiceProps>(),
     personsMonth:Array<IUserServiceProps>(),
+    personsView:Array<IUserServiceProps>(),
     month:moment().month(),
     isToday:true,
     showModal:false,
@@ -35,7 +36,7 @@ export default class Birthdays extends React.Component<IBirthdaysProps, {}> {
   };
   private _loadUsers = (range:Range,month?:number):void=>{
     getUserBySearch(this.props.spHttp, (items:Array<IUserServiceProps>)=>{ 
-      items = items.sort((a,b) => (a.Birthday01 > b.Birthday01) ? 1 : ((b.Birthday01 > a.Birthday01) ? -1 : 0))
+      items = items.sort((a,b) => (a.Birthday01 > b.Birthday01) ? 1 : ((b.Birthday01 > a.Birthday01) ? -1 : 0));
       if(range == Range.Year){
         this.setState({ 
           personsToday:items,
@@ -63,19 +64,22 @@ export default class Birthdays extends React.Component<IBirthdaysProps, {}> {
   private _changeToWeek =():void=>{
 
     this.setState({
-      isToday: false
+      isToday: false,
+      personsView:this.state.personsWeek
     })
   }
   private _changeToday =():void=>{
 
     this.setState({
-      isToday: true
+      isToday: true,
+      personsView:this.state.personsToday
     })
   }
 
   private _changeMonth =(monthNumber:number):void=>{
     this.setState({
-      month:monthNumber
+      month:monthNumber,
+      personsMonth:Array<IUserServiceProps>()
     })
     this._loadUsers(Range.Month,monthNumber)
   }
@@ -85,17 +89,31 @@ export default class Birthdays extends React.Component<IBirthdaysProps, {}> {
               <Spinner size={SpinnerSize.large} label="Sorry, still loading..." ariaLive="assertive" /> 
     </div>:"";
     let pernsonRender = this.state.isToday? this.state.personsToday: this.state.personsWeek;
+    let sameDay =Array<Number>();
     let persons = pernsonRender.map((item:IUserServiceProps,i:number)=>{
-      return  <Persona className={customStyles["persona-item"]}
-      key={i}
-      imageUrl={ item.PictureURL}
-      text={item.Title}
-      secondaryText={item.JobTitle ? item.JobTitle: ""}
-      hidePersonaDetails={false}
-      tertiaryText={item.Department ? item.Department:"" }
-      //showSecondaryText={true}
-      size={   this.props.birthdayProps.pictureSize} >
-    </Persona>
+      let showBar = false;
+      if(sameDay.filter(p => p == moment(item.Birthday01).date()).length === 0){
+        sameDay.push(moment(item.Birthday01).date());
+        showBar=true;
+      }
+      return  <div>
+                {this.state.isToday || !showBar? "": <strong style={{background:"#005a9e", color:"#FFF", padding:"5px", display:"block" }}>{moment(item.Birthday01).format("dddd DD")}</strong>}
+                <Persona className={customStyles["persona-item"]}
+              key={i}
+              imageUrl={ item.PictureURL}
+              text={item.Title}
+              hidePersonaDetails={false}
+              size={   this.props.birthdayProps.pictureSize} >
+              {this.props.birthdayProps.showJobTitle ? <span className={"ms-font-s-plus"}>{item.JobTitle}</span>:""}
+              {this.props.birthdayProps.showDepartament ? <span className={"ms-font-s-plus"}>{item.Department}</span>:""}
+              {this.props.birthdayProps.showPhone ? <span className={"ms-font-s-plus"}>{item.WorkPhone}</span>:""}
+              <span className={"ms-font-m-plus"}>
+                <a href={"sip:"+item.WorkEmail } target="_blank" style={{padding:"0px 8px"}}><Icon iconName="TeamsLogoInverse" /></a> | 
+                <a  href={ "mailto:"+item.WorkEmail } style={{padding:"0px 8px"}}><Icon iconName="EditMail" /></a> | 
+                <a target="_blank" href={"/_layouts/15/me.aspx/?p="+ item.WorkEmail} style={{padding:"0px 8px"}}><Icon iconName="ContactCard"/></a>
+              </span>
+            </Persona>
+      </div>
     });
 
     return (
@@ -109,6 +127,7 @@ export default class Birthdays extends React.Component<IBirthdaysProps, {}> {
           <div className="ms-Grid-col ms-sm12">
             <div className="" style={{maxHeight:"300px", overflowY:"scroll"}}>
               {spiner}
+              <br />
               {persons}
             </div>
           </div>    
@@ -126,7 +145,7 @@ export default class Birthdays extends React.Component<IBirthdaysProps, {}> {
             </div>  
           </div>  
         </div>
-        <BirthdayModal _showModal={this.state.showModal} _openModal={this._openModal} _hideModal={this._hideModal}  _persons={this.state.personsMonth} ></BirthdayModal>
+        <BirthdayModal _changeMonth={this._changeMonth} _month={this.state.month} _showModal={this.state.showModal} _openModal={this._openModal} _hideModal={this._hideModal}  _persons={this.state.personsMonth} ></BirthdayModal>
       </div>
     );
   }

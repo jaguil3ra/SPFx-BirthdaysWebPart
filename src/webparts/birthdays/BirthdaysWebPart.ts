@@ -19,7 +19,7 @@ import { IBirthdaysWebProps,IBirthdaysProps } from './components/IBirthdaysProps
 
 
 export default class BirthdaysWebPart extends BaseClientSideWebPart<IBirthdaysWebProps> {
-  
+
   public render(): void {
     const element: React.ReactElement<IBirthdaysProps> = React.createElement(
       Birthdays,
@@ -84,32 +84,9 @@ export default class BirthdaysWebPart extends BaseClientSideWebPart<IBirthdaysWe
                 }),
                 PropertyPaneCheckbox('showJobTitle', {
                   text: strings.DescriptionPropertyShowJobTitle,
-                  checked:false
+                  checked:true
                 }),   
                 new PropertyPaneCredits()                                              
-              ]
-            },
-            {
-              groupName: 'More Birthdays',
-              groupFields: [
-                PropertyPaneDropdown('Agrupacion',{
-                  label: 'Agrupación',
-                  selectedKey:1,
-                  options:[
-                    {
-                      key:1,
-                      text:"Diario"
-                    },
-                    {
-                      key:2,
-                      text:"Semanal"
-                    },
-                    {
-                      key:3,
-                      text:"Mensual"
-                    }                                        
-                  ]
-                })
               ]
             }
           ],

@@ -53,7 +53,7 @@ export interface IUserServiceProps{
   WorkPhone?:string;
   RefinableDate00?:Date;
   RefinableDate01?:Date;
-  PictureURL:string,
+  PictureURL:string
 }
 
 export enum Range{
