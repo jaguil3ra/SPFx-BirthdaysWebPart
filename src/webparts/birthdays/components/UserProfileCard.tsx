@@ -43,7 +43,7 @@ export class UserProfileCard extends React.Component<IUserServiceProps, {}>{
             <div className={customStyles.userCart} key={this.props.WorkEmail}>
                 <div className={customStyles['ms-PersonaCard']+" "+customStyles['ms-PersonaCard']}>
                     <div className={customStyles['ms-PersonaCard-persona']}>
-                    <div className={customStyles['ms-Persona ms-Persona--xl']} style={{padding:"1px 0px 13px 20px"}}>
+                    <div className={customStyles['ms-Persona ms-Persona--xl']+ " "+ customStyles["person-space"]}>
                     <Persona className={customStyles["persona-item"]}
                             imageUrl={this.props.PictureURL}
                             text={this.props.Title}

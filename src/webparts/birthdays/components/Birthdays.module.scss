@@ -47,8 +47,12 @@
   background:$ms-color-themeLight
 }
 .bar-secondary{
-  background: $ms-color-themeSecondary
-
+  background: $ms-color-themeSecondary;
+}
+.tag-date{
+  background:$ms-color-themeDark;
+  color:"#FFF";
+  padding:"5px"
 }
 
 .userCart{
@@ -64,5 +68,8 @@
   @import '../../../../node_modules/office-ui-fabric/dist/components/PersonaCard/PersonaCard.scss';
   .hide{
     display: none
+  }
+  .person-space{
+    padding: 1px 0px 13px 20px;
   }
 }

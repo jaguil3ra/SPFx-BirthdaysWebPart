@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
 import { SPHttpClient } from '@microsoft/sp-http'
-
+import * as microsoftTeams from '@microsoft/teams-js';
 import {
   BaseClientSideWebPart,
   IPropertyPaneConfiguration,
@@ -19,7 +19,7 @@ import { IBirthdaysWebProps,IBirthdaysProps } from './components/IBirthdaysProps
 
 
 export default class BirthdaysWebPart extends BaseClientSideWebPart<IBirthdaysWebProps> {
-
+  //private _teamsContext: microsoftTeams.Context;
   public render(): void {
     const element: React.ReactElement<IBirthdaysProps> = React.createElement(
       Birthdays,

@@ -7,7 +7,6 @@ import  customStyles from './Birthdays.module.scss';
 import * as strings from 'BirthdaysWebPartStrings';
 import UserProfileCard from './UserProfileCard';
 import { IUserServiceProps } from './IBirthdaysProps';
-import styles from './Birthdays.module.scss';
 import * as moment from 'moment';
 
 export interface IBirthdayModal {
@@ -28,7 +27,7 @@ export const BirthdayModal = (props:IBirthdayModal):JSX.Element => {
             isBlocking={false}
             containerClassName={customStyles.containerModal}
             >
-            <div className={styles["ms-modalExample-header"]}>
+            <div className={customStyles["ms-modalExample-header"]}>
                 <span>Cumpleañeros mes de Enero</span>
                 <Dropdown 
                     onChanged={(op: IDropdownOption)=>{
@@ -54,12 +53,12 @@ export const BirthdayModal = (props:IBirthdayModal):JSX.Element => {
                 />
                     <Button onClick={()=>{ props._hideModal() }} text="Close" style={{textAlign:"left"}} />
             </div>    
-            <div id="Mundo" className={styles["ms-modalExample-body"]}>
+            <div id="Mundo" className={customStyles["ms-modalExample-body"]}>
                 <div>                         
                     {props._persons.map((elem:IUserServiceProps,i:number)=>{
                         return(
                             <div className="ms-Grid-col ms-sm12 ms-md6 ms-lg4 ms-xl3" key={elem.WorkEmail}>
-                                <strong style={{background:"#005a9e", color:"#FFF", padding:"5px"}}>{moment(elem.Birthday01).format("dddd DD")}</strong>
+                                <strong className={customStyles["tag-date"]}>{moment(elem.Birthday01).format("dddd DD")}</strong>
                                 <UserProfileCard 
                                     Birthday01={elem.Birthday01} 
                                     PictureURL={elem.PictureURL}

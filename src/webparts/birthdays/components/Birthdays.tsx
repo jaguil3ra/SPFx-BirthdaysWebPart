@@ -16,7 +16,7 @@ export default class Birthdays extends React.Component<IBirthdaysProps, {}> {
   
   constructor(props){
     super(props)
-    this._loadUsers(Range.Year);
+    this._loadUsers(Range.Week);
     this._openModal = this._openModal.bind(this);
     this._hideModal = this._hideModal.bind(this);
     this._changeMonth = this._changeMonth.bind(this);
@@ -37,9 +37,9 @@ export default class Birthdays extends React.Component<IBirthdaysProps, {}> {
   private _loadUsers = (range:Range,month?:number):void=>{
     getUserBySearch(this.props.spHttp, (items:Array<IUserServiceProps>)=>{ 
       items = items.sort((a,b) => (a.Birthday01 > b.Birthday01) ? 1 : ((b.Birthday01 > a.Birthday01) ? -1 : 0));
-      if(range == Range.Year){
+      if(range == Range.Week){
         this.setState({ 
-          personsToday:items,
+          personsToday:items.filter(p => moment(p.Birthday01).format("DDMMMM") == moment().format("DDMMMM")),
           personsWeek:items,
           isLoad:true});      
       }else{
