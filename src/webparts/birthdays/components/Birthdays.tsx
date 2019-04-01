@@ -91,7 +91,10 @@ export default class Birthdays extends React.Component<IBirthdaysProps, {}> {
   }
   
   public render(): React.ReactElement<IBirthdaysProps> {
-
+    let currentLocale = "en";
+    if(this.props._pageContext.cultureInfo._currentUICultureName == "es-ES"){
+        currentLocale = "es"
+    }
     let spiner = this.state.showSpinner ? 
               <Spinner size={SpinnerSize.large} label={strings.loadingSpinner} ariaLive="assertive" /> 
     :<div></div>;
@@ -107,7 +110,7 @@ export default class Birthdays extends React.Component<IBirthdaysProps, {}> {
         showBar=true;
       }
       return  <div key={i}>
-                {this.state.isToday || !showBar? "": <strong className={customStyles["tag-week"]}>{moment(item.Birthday01).format("dddd DD")}</strong>}
+                {this.state.isToday || !showBar? "": <strong className={customStyles["tag-week"]}>{moment(item.Birthday01).locale(currentLocale).format("dddd DD")}</strong>}
                 <Persona className={customStyles["persona-item"]}
                   key={i}
                   imageUrl={ item.PictureURL}
@@ -161,7 +164,7 @@ export default class Birthdays extends React.Component<IBirthdaysProps, {}> {
             </div>  
           </div>  
         </div>
-        <BirthdayModal showSpinner={this.state.showSpinnerModal} _changeMonth={this._changeMonth} _month={this.state.month} _showModal={this.state.showModal} _openModal={this._openModal} _hideModal={this._hideModal}  _persons={this.state.monthBirthdays} ></BirthdayModal>
+        <BirthdayModal locale={this.props._pageContext.cultureInfo._currentUICultureName} showSpinner={this.state.showSpinnerModal} _changeMonth={this._changeMonth} _month={this.state.month} _showModal={this.state.showModal} _openModal={this._openModal} _hideModal={this._hideModal}  _persons={this.state.monthBirthdays} ></BirthdayModal>
       </div>
     );
   }

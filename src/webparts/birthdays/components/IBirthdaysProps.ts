@@ -6,6 +6,7 @@ export interface IBirthdaysProps {
   _pageContext:{
     cultureInfo:{
       _currentCultureName:string
+      _currentUICultureName:string
     },
     site:{
       absoluteUrl:string,

@@ -20,6 +20,7 @@ import { IBirthdaysWebProps,IBirthdaysProps } from './components/IBirthdaysProps
 
 export default class BirthdaysWebPart extends BaseClientSideWebPart<IBirthdaysWebProps> {
   //private _teamsContext: microsoftTeams.Context;
+  
   public render(): void {
     const element: React.ReactElement<IBirthdaysProps> = React.createElement(
       Birthdays,
@@ -29,7 +30,6 @@ export default class BirthdaysWebPart extends BaseClientSideWebPart<IBirthdaysWe
         _pageContext:this.context.pageContext
       }
     );
-
     ReactDom.render(element, this.domElement);
   }
 

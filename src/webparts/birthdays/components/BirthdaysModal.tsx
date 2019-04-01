@@ -10,6 +10,7 @@ import { IUserServiceProps } from './IBirthdaysProps';
 import * as moment from 'moment';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 
+
 export interface IBirthdayModal {
     _openModal:()=>void,
     _hideModal:()=>void
@@ -17,10 +18,16 @@ export interface IBirthdayModal {
     _month:number,
     _persons:Array<any>,
     _changeMonth: (i:number)=>void,
-    showSpinner:boolean
+    showSpinner:boolean,
+    locale:string;
 }
 
 export const BirthdayModal = (props:IBirthdayModal):JSX.Element => {
+    let currentLocale = "en";
+    if(props.locale == "es-ES"){
+        currentLocale = "es"
+    }
+
     let spiner = props.showSpinner ? 
         <Spinner size={SpinnerSize.large} label={strings.loadingSpinner} ariaLive="assertive" /> :<div></div>
     return(
@@ -39,18 +46,18 @@ export const BirthdayModal = (props:IBirthdayModal):JSX.Element => {
                     dropdownWidth={200}
                     defaultSelectedKey={props._month}
                     options={[
-                        {key:0, text: moment().month(0).format("MMMM")},
-                        {key:1, text: moment().month(1).format("MMMM")},
-                        {key:2, text: moment().month(2).format("MMMM")},
-                        {key:3, text: moment().month(3).format("MMMM")},
-                        {key:4, text: moment().month(4).format("MMMM")},
-                        {key:5, text: moment().month(5).format("MMMM")},
-                        {key:6, text: moment().month(6).format("MMMM")},
-                        {key:7, text: moment().month(7).format("MMMM")},
-                        {key:8, text: moment().month(8).format("MMMM")},
-                        {key:9, text: moment().month(9).format("MMMM")},
-                        {key:10, text: moment().month(10).format("MMMM")},
-                        {key:11, text: moment().month(11).format("MMMM")},                        
+                        {key:0, text: moment().month(0).locale(currentLocale).format("MMMM")},
+                        {key:1, text: moment().month(1).locale(currentLocale).format("MMMM")},
+                        {key:2, text: moment().month(2).locale(currentLocale).format("MMMM")},
+                        {key:3, text: moment().month(3).locale(currentLocale).format("MMMM")},
+                        {key:4, text: moment().month(4).locale(currentLocale).format("MMMM")},
+                        {key:5, text: moment().month(5).locale(currentLocale).format("MMMM")},
+                        {key:6, text: moment().month(6).locale(currentLocale).format("MMMM")},
+                        {key:7, text: moment().month(7).locale(currentLocale).format("MMMM")},
+                        {key:8, text: moment().month(8).locale(currentLocale).format("MMMM")},
+                        {key:9, text: moment().month(9).locale(currentLocale).format("MMMM")},
+                        {key:10, text: moment().month(10).locale(currentLocale).format("MMMM")},
+                        {key:11, text: moment().month(11).locale(currentLocale).format("MMMM")},                        
                     ]}
                 />
                     
@@ -67,7 +74,7 @@ export const BirthdayModal = (props:IBirthdayModal):JSX.Element => {
                         props._persons.map((elem:IUserServiceProps,i:number)=>{
                         return(
                             <div className="ms-Grid-col ms-sm12 ms-md6 ms-lg4 ms-xl3" key={elem.WorkEmail}>
-                                <strong className={customStyles["tag-date"]}>{moment(elem.Birthday01).format("dddd DD")}</strong>
+                                <strong className={customStyles["tag-date"]}>{moment(elem.Birthday01).locale(currentLocale).format("dddd DD")}</strong>
                                 <UserProfileCard 
                                     Birthday01={elem.Birthday01} 
                                     PictureURL={elem.PictureURL}

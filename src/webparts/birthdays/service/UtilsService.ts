@@ -6,7 +6,6 @@ import * as moment from 'moment';
 
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 export const getUserBySearch = (sphttp:SPHttpClient,callback:Clousere, period:Range, month?:number ):void=> {
-    
     let currentRange:string;
     if(period == Range.Week){
       currentRange = "RefinableDate00>="+moment().day(0).year(2000).toISOString()+" AND RefinableDate00<="+moment().day(6).year(2000).toISOString()
@@ -41,7 +40,6 @@ export const getUserBySearch = (sphttp:SPHttpClient,callback:Clousere, period:Ra
     if(Environment.type !== EnvironmentType.Local){
       sphttp.post("/_api/search/postquery", SPHttpClient.configurations.v1,spOpts).then((response: SPHttpClientResponse)=>{
         response.json().then((responseJSON: any) => {
-            console.log(JSON.stringify(responseJSON));
           const items = responseJSON.PrimaryQueryResult.RelevantResults.Table.Rows;
           let MyLista = [];
           items.forEach((elemento)=>{
