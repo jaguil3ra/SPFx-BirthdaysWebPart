@@ -9,7 +9,7 @@
   "preconfiguredEntries": [{
     "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
     "group": { "default": "Jaguil3ra" },
-    "title": { "default": "Birthdays WebPart" },
+    "title": { "default": "Birthdays" },
     "description": { "default": "Birthdays description" },
     "officeFabricIconFontName": "BirthdayCake",
     "properties": {
