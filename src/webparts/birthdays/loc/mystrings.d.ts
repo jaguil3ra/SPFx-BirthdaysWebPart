@@ -13,7 +13,10 @@ declare interface IBirthdaysWebPartStrings {
   CreditDescription:string,
   ButtonToday:string,
   ButtonWeek:string,
-  ButtonMore:string
+  ButtonMore:string,
+  DescriptionModal:string,
+  EmptyBirthday:string,
+  loadingSpinner:string
 }
 
 declare module 'BirthdaysWebPartStrings' {

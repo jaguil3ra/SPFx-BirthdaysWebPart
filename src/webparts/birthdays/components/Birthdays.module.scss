@@ -16,8 +16,6 @@
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
     max-height: 500px;
   }
-
-
 }
 .containerModal{
   width: 90%
@@ -43,6 +41,12 @@
 .ms-modalExample-body {
   padding: 15px 28px;
 }
+.tag-week{
+  background:#005a9e; 
+  color:#FFF;
+  padding:5px;
+  display:block
+}
 .light{
   background:$ms-color-themeLight
 }
@@ -51,10 +55,14 @@
 }
 .tag-date{
   background:$ms-color-themeDark;
-  color:"#FFF";
-  padding:"5px"
+  color: #FFF;
+  padding:5px
 }
-
+@media screen and (max-width: 641px){
+  .hideInSm {
+    display: none
+  }
+}
 .userCart{
   @import '../../../../node_modules/office-ui-fabric/dist/sass/Fabric.Utilities.Output';
   @import '../../../../node_modules/office-ui-fabric/dist/sass/Fabric.ZIndex.Variables';

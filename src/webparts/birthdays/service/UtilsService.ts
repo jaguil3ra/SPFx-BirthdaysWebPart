@@ -4,8 +4,6 @@ type Clousere = (items:Array<any>)=>void;
 import * as moment from 'moment';
 
 
-
-
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 export const getUserBySearch = (sphttp:SPHttpClient,callback:Clousere, period:Range, month?:number ):void=> {
     
@@ -22,7 +20,7 @@ export const getUserBySearch = (sphttp:SPHttpClient,callback:Clousere, period:Ra
           request: {
                 SourceId:'B09A7990-05EA-4AF9-81EF-EDFAB16C4E31',
                 Querytext:currentRange,
-                RowLimit:1000,
+                RowLimit:500,
                 SelectProperties: [
                     "PictureURL",
                     "JobTitle",
@@ -43,7 +41,7 @@ export const getUserBySearch = (sphttp:SPHttpClient,callback:Clousere, period:Ra
     if(Environment.type !== EnvironmentType.Local){
       sphttp.post("/_api/search/postquery", SPHttpClient.configurations.v1,spOpts).then((response: SPHttpClientResponse)=>{
         response.json().then((responseJSON: any) => {
-            console.log(responseJSON);
+            console.log(JSON.stringify(responseJSON));
           const items = responseJSON.PrimaryQueryResult.RelevantResults.Table.Rows;
           let MyLista = [];
           items.forEach((elemento)=>{
@@ -59,11 +57,14 @@ export const getUserBySearch = (sphttp:SPHttpClient,callback:Clousere, period:Ra
             })
             MyLista.push(temp)
           })
-          console.log(MyLista);
           callback(MyLista)
-        });
+        }).catch((error)=>{
+          console.log(error);
+          callback([])
+        });;
       })
     }else{
+      //This is only for test
       const MockupElements = [
         { job: "Developer Senior",dep: "PMO"},
         { job: "Developer Junior",dep: "PMO"},

@@ -12,6 +12,7 @@
     }
   },
   "externals": {},
+  
   "localizedResources": {
     "BirthdaysWebPartStrings": "lib/webparts/birthdays/loc/{locale}.js"
   }

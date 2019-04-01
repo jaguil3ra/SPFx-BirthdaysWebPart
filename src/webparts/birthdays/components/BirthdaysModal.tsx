@@ -8,6 +8,7 @@ import * as strings from 'BirthdaysWebPartStrings';
 import UserProfileCard from './UserProfileCard';
 import { IUserServiceProps } from './IBirthdaysProps';
 import * as moment from 'moment';
+import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 
 export interface IBirthdayModal {
     _openModal:()=>void,
@@ -15,11 +16,13 @@ export interface IBirthdayModal {
     _showModal:boolean,
     _month:number,
     _persons:Array<any>,
-    _changeMonth: (i:number)=>void
+    _changeMonth: (i:number)=>void,
+    showSpinner:boolean
 }
 
 export const BirthdayModal = (props:IBirthdayModal):JSX.Element => {
-
+    let spiner = props.showSpinner ? 
+        <Spinner size={SpinnerSize.large} label={strings.loadingSpinner} ariaLive="assertive" /> :<div></div>
     return(
         <Modal 
             isOpen={props._showModal}
@@ -28,7 +31,7 @@ export const BirthdayModal = (props:IBirthdayModal):JSX.Element => {
             containerClassName={customStyles.containerModal}
             >
             <div className={customStyles["ms-modalExample-header"]}>
-                <span>Cumpleañeros mes de Enero</span>
+                <span style={{marginRight:"20px"}}>{strings.DescriptionModal}</span>
                 <Dropdown 
                     onChanged={(op: IDropdownOption)=>{
                         props._changeMonth(Number(op.key)) 
@@ -49,13 +52,19 @@ export const BirthdayModal = (props:IBirthdayModal):JSX.Element => {
                         {key:10, text: moment().month(10).format("MMMM")},
                         {key:11, text: moment().month(11).format("MMMM")},                        
                     ]}
-                    
                 />
-                    <Button onClick={()=>{ props._hideModal() }} text="Close" style={{textAlign:"left"}} />
+                    
             </div>    
-            <div id="Mundo" className={customStyles["ms-modalExample-body"]}>
-                <div>                         
-                    {props._persons.map((elem:IUserServiceProps,i:number)=>{
+            <div  className={customStyles["ms-modalExample-body"]}>
+                <Button onClick={()=>{ props._hideModal() }} text="Close" className={customStyles.light}  /><br /><br />
+                <div>
+                    {spiner}
+                    {props._persons.length == 0 && !props.showSpinner? 
+                    <div style={{textAlign:"center"}}>
+                        <Icon style={{fontSize:"80px"}}  iconName="Balloons" className="ms-font-xxl" />
+                        <p className="ms-font-xxl">{strings.EmptyBirthday}</p>
+                    </div>: 
+                        props._persons.map((elem:IUserServiceProps,i:number)=>{
                         return(
                             <div className="ms-Grid-col ms-sm12 ms-md6 ms-lg4 ms-xl3" key={elem.WorkEmail}>
                                 <strong className={customStyles["tag-date"]}>{moment(elem.Birthday01).format("dddd DD")}</strong>

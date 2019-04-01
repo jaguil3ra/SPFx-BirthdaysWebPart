@@ -14,6 +14,9 @@ define([], function() {
     "CreditDescription":"Click here for more information",
     "ButtonToday":"Today",
     "ButtonWeek":"Week",
-    "ButtonMore":"See More"
+    "ButtonMore":"See More",
+    "DescriptionModal":"Birthdays month of ",
+    "EmptyBirthday":"We don't have birthdays!",
+    "loadingSpinner":"Sorry, still loading..."
   }
 });
