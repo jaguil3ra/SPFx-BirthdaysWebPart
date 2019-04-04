@@ -28,9 +28,7 @@ export interface IBirthdaysProps {
 
 export interface IBirthdaysWebProps {
   title: string;
-  pictureSize:number;
   showDepartament:boolean;
-  showPhone:boolean;
   showJobTitle:boolean;
 }
 export interface IPersonaProps{
@@ -39,7 +37,6 @@ export interface IPersonaProps{
   jobTitle:string;
   departament:string;
   phone:string;
-  size?:number;
   birthday?:Date
 }
 

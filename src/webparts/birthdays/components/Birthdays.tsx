@@ -5,7 +5,7 @@ import { escape } from '@microsoft/sp-lodash-subset';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { Button } from 'office-ui-fabric-react/lib/Button';
 import { getUserBySearch } from '../service/UtilsService';
-import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
+import UserProfileCard from './UserProfileCard';
 import  { BirthdayModal } from './BirthdaysModal';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import {IUserServiceProps} from './IBirthdaysProps';
@@ -91,6 +91,7 @@ export default class Birthdays extends React.Component<IBirthdaysProps, {}> {
   }
   
   public render(): React.ReactElement<IBirthdaysProps> {
+    //here define the current language ui for calendar
     let currentLocale = "en";
     if(this.props._pageContext.cultureInfo._currentUICultureName == "es-ES"){
         currentLocale = "es"
@@ -111,21 +112,15 @@ export default class Birthdays extends React.Component<IBirthdaysProps, {}> {
       }
       return  <div key={i}>
                 {this.state.isToday || !showBar? "": <strong className={customStyles["tag-week"]}>{moment(item.Birthday01).locale(currentLocale).format("dddd DD")}</strong>}
-                <Persona className={customStyles["persona-item"]}
-                  key={i}
-                  imageUrl={ item.PictureURL}
-                  text={item.Title}
-                  hidePersonaDetails={false}
-                  size={   this.props.birthdayProps.pictureSize} >
-                  {this.props.birthdayProps.showJobTitle ? <span className={"ms-font-s-plus"}>{item.JobTitle}</span>:""}
-                  {this.props.birthdayProps.showDepartament ? <span className={"ms-font-s-plus"}>{item.Department}</span>:""}
-                  {this.props.birthdayProps.showPhone ? <span className={"ms-font-s-plus"}>{item.WorkPhone}</span>:""}
-                  <span className={"ms-font-m-plus"}>
-                    <a href={"sip:"+item.WorkEmail } target="_blank" style={{padding:"0px 8px"}}><Icon iconName="TeamsLogoInverse" /></a> | 
-                    <a  href={ "mailto:"+item.WorkEmail } style={{padding:"0px 8px"}}><Icon iconName="EditMail" /></a> | 
-                    <a target="_blank" href={"/_layouts/15/me.aspx/?p="+ item.WorkEmail} style={{padding:"0px 8px"}}><Icon iconName="ContactCard"/></a>
-                  </span>
-                </Persona>
+                <UserProfileCard 
+                Birthday01={item.Birthday01}
+                PictureURL={item.PictureURL}
+                WorkEmail={item.WorkEmail}
+                WorkPhone={item.WorkPhone}
+                Title={item.Title}
+                Department={this.props.birthdayProps.showDepartament ? item.Department: ""}
+                JobTitle={this.props.birthdayProps.showJobTitle? item.JobTitle: ""}
+                ></UserProfileCard>
               </div>
     });
 
@@ -138,7 +133,7 @@ export default class Birthdays extends React.Component<IBirthdaysProps, {}> {
             </div>            
           </div>
           <div className="ms-Grid-col ms-sm12">
-            <div className="" style={{maxHeight:"300px", overflowY:"scroll"}}>
+            <div className="" style={{maxHeight:"600px", overflowY:"scroll"}}>
               {spiner}
               <br />
               {  this.state.showSpinner || persons.length > 0 ? 
@@ -154,8 +149,8 @@ export default class Birthdays extends React.Component<IBirthdaysProps, {}> {
             <div className={customStyles["bar-secondary"]}>
               <div className="ms-Grid">
                   <div className="ms-Grid-col ms-md8 ms-sm12">
-                  <Button className={customStyles.light} style={{marginRight:"10px"}}  onClick={()=>{this._changeToday()}}  ><Icon iconName="GotoToday" /> {strings.ButtonToday} </Button>
-                  <Button className={customStyles.light}  onClick={()=>{ this._changeToWeek()}}><Icon iconName="CalendarWeek" /> {strings.ButtonWeek}</Button>              
+                  <Button className={ this.state.isToday ? customStyles.dark : customStyles.light } style={{marginRight:"10px"}}  onClick={()=>{this._changeToday()}}  ><Icon iconName="GotoToday" /> {strings.ButtonToday} </Button>
+                  <Button className={ this.state.isToday ? customStyles.light : customStyles.dark }  onClick={()=>{ this._changeToWeek()}}><Icon iconName="CalendarWeek" /> {strings.ButtonWeek}</Button>              
                   </div>
                   <div className="ms-Grid-col ms-md4 ms-hiddenSm">
                     <Button className={customStyles.light}  style={ {float:"right"}} onClick={()=>{ this._openModal() }} > <Icon iconName="GroupedList"></Icon> {strings.ButtonMore}</Button>
@@ -164,7 +159,7 @@ export default class Birthdays extends React.Component<IBirthdaysProps, {}> {
             </div>  
           </div>  
         </div>
-        <BirthdayModal locale={this.props._pageContext.cultureInfo._currentUICultureName} showSpinner={this.state.showSpinnerModal} _changeMonth={this._changeMonth} _month={this.state.month} _showModal={this.state.showModal} _openModal={this._openModal} _hideModal={this._hideModal}  _persons={this.state.monthBirthdays} ></BirthdayModal>
+        <BirthdayModal locale={currentLocale} showSpinner={this.state.showSpinnerModal} _changeMonth={this._changeMonth} _month={this.state.month} _showModal={this.state.showModal} _openModal={this._openModal} _hideModal={this._hideModal}  _persons={this.state.monthBirthdays} ></BirthdayModal>
       </div>
     );
   }

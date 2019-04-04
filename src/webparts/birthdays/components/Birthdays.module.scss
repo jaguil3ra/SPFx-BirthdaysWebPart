@@ -18,7 +18,7 @@
   }
 }
 .containerModal{
-  width: 90%
+  width: 80vw
 }
 .ms-modalExample-header {
   -webkit-box-flex: 1;
@@ -42,12 +42,15 @@
   padding: 15px 28px;
 }
 .tag-week{
-  background:#005a9e; 
+  background:$ms-color-themeDark; 
   color:#FFF;
   padding:5px;
   display:block
 }
 .light{
+  background:$ms-color-themeLighterAlt
+}
+.dark{
   background:$ms-color-themeLight
 }
 .bar-secondary{
@@ -74,10 +77,25 @@
   @import '../../../../node_modules/office-ui-fabric/dist/sass/Fabric.Animations.Output';  // Responsive
   @import '../../../../node_modules/office-ui-fabric/dist/sass/Fabric.Responsive.Variables';
   @import '../../../../node_modules/office-ui-fabric/dist/components/PersonaCard/PersonaCard.scss';
+
+  .personaCardPicture{
+    background-image: url("../confeti.png") !important;;
+    background-size: 100% 180px !important;
+    background-repeat: repeat-x !important;;
+  }
+  .Persona-image{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+  }
+  .Persona-details{
+    text-align: center
+  }
   .hide{
     display: none
   }
   .person-space{
     padding: 1px 0px 13px 20px;
+    background: #eaeaea;
   }
 }

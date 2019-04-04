@@ -1,12 +1,12 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
-    "name": "web-parts-utils-client-side-solution",
+    "name": "BirthdayWebPart",
     "id": "2ab3e79b-159e-4e2b-aec2-c89f872a4d47",
-    "version": "1.0.0.0",
+    "version": "1.0.0.1",
     "includeClientSideAssets": true
   },
   "paths": {
-    "zippedPackage": "solution/WebPartUtils.sppkg"
+    "zippedPackage": "solution/BirthdayWebPart.sppkg"
   }
 }

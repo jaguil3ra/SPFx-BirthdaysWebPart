@@ -23,11 +23,7 @@ export interface IBirthdayModal {
 }
 
 export const BirthdayModal = (props:IBirthdayModal):JSX.Element => {
-    let currentLocale = "en";
-    if(props.locale == "es-ES"){
-        currentLocale = "es"
-    }
-
+    let currentLocale = props.locale;
     let spiner = props.showSpinner ? 
         <Spinner size={SpinnerSize.large} label={strings.loadingSpinner} ariaLive="assertive" /> :<div></div>
     return(
@@ -63,7 +59,7 @@ export const BirthdayModal = (props:IBirthdayModal):JSX.Element => {
                     
             </div>    
             <div  className={customStyles["ms-modalExample-body"]}>
-                <Button onClick={()=>{ props._hideModal() }} text="Close" className={customStyles.light}  /><br /><br />
+                <Button onClick={()=>{ props._hideModal() }} text="Close" className={customStyles.dark}  /><br /><br />
                 <div>
                     {spiner}
                     {props._persons.length == 0 && !props.showSpinner? 

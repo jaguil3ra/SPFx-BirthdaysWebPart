@@ -56,36 +56,15 @@ export default class BirthdaysWebPart extends BaseClientSideWebPart<IBirthdaysWe
                   label: strings.DescriptionPropertyTitle,
                   maxLength:50
                 }),
-                PropertyPaneDropdown('pictureSize', {
-                  label: strings.DescriptionPropertyPersonaSize,
-                  selectedKey:1,
-                  options:[
-                    {
-                      key:13,
-                      text:strings.OptionSizeShort
-                    },
-                    {
-                      key:14,
-                      text:strings.OptionSizeMedium
-                    },
-                    {
-                      key:15,
-                      text:strings.OptionSizeLarge
-                    },                                        
-                  ]
-                }),                
+                PropertyPaneCheckbox('showJobTitle', {
+                  text: strings.DescriptionPropertyShowJobTitle,
+                  checked:true
+                }),                 
                 PropertyPaneCheckbox('showDepartament', {
                   text: strings.DescriptionPropertyShowDepartament,
                   checked:false
                 }),                  
-                PropertyPaneCheckbox('showPhone', {
-                  text: strings.DescriptionPropertyShowPhone,
-                  checked:false
-                }),
-                PropertyPaneCheckbox('showJobTitle', {
-                  text: strings.DescriptionPropertyShowJobTitle,
-                  checked:true
-                }),   
+  
                 new PropertyPaneCredits()                                              
               ]
             }
