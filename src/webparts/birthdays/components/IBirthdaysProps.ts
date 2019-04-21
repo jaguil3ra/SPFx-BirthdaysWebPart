@@ -30,6 +30,7 @@ export interface IBirthdaysWebProps {
   title: string;
   showDepartament:boolean;
   showJobTitle:boolean;
+  enableButtonSeeMore:boolean;
 }
 export interface IPersonaProps{
   title:string;

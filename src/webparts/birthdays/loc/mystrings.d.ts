@@ -6,6 +6,7 @@ declare interface IBirthdaysWebPartStrings {
   DescriptionPropertyShowDepartament:string;
   DescriptionPropertyShowJobTitle:string;
   DescriptionPropertyPersonaSize:string;
+  DescriptionPropertyEnableSeeMore:string;
   OptionSizeShort:string,
   OptionSizeMedium:string,
   OptionSizeLarge:string,

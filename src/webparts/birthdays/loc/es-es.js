@@ -8,6 +8,7 @@ define([], function() {
       "DescriptionPropertyShowDepartament":"Mostrar departamento",
       "DescriptionPropertyShowJobTitle":"Mostrar cargo",
       "DescriptionPropertyPersonaSize":"Tamaño de la Foto",
+      "DescriptionPropertyEnableSeeMore":"Habilitar boton ver mas",
       "OptionSizeShort":"Pequeño",
       "OptionSizeMedium":"Mediano",
       "OptionSizeLarge":"Grande",

@@ -4,6 +4,7 @@ import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import {IUserServiceProps} from './IBirthdaysProps';
 import * as moment from 'moment';
 
+
 export class UserProfileCard extends React.Component<IUserServiceProps, {}>{
     constructor(props){
         super(props);
@@ -71,8 +72,8 @@ export class UserProfileCard extends React.Component<IUserServiceProps, {}>{
                         <ul id="detailList" className={customStyles['ms-PersonaCard-detailChat']}>
                             <li  className={customStyles['ms-PersonaCard-actionDetails'] +" "+ (this.state.teams ? customStyles['is-active']: customStyles['hide'])}>
                                 <div className={customStyles['ms-PersonaCard-detailLine']}>
-                                    <span className={customStyles['ms-PersonaCard-detailLabel']}>Skype: </span> 
-                                    <a className={customStyles['ms-Link']} target="_blank" href={"sip:"+this.props.WorkEmail }>Teams</a>
+                                    <span className={customStyles['ms-PersonaCard-detailLabel']}>Teams: </span> 
+                                    <a className={customStyles['ms-Link']} href={"sip:"+this.props.WorkEmail }>Chat</a>
                                 </div>
                             </li>
                             <li  className={customStyles['ms-PersonaCard-actionDetails'] +" "+ (this.state.phone ? customStyles['is-active']: customStyles['hide'])}>

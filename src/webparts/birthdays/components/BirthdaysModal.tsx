@@ -69,7 +69,7 @@ export const BirthdayModal = (props:IBirthdayModal):JSX.Element => {
                     </div>: 
                         props._persons.map((elem:IUserServiceProps,i:number)=>{
                         return(
-                            <div className="ms-Grid-col ms-sm12 ms-md6 ms-lg4 ms-xl3" key={elem.WorkEmail}>
+                            <div className="ms-Grid-col ms-sm12 ms-md6 ms-lg4 ms-xl3" style={{minHeight:"387px"}} key={elem.WorkEmail}>
                                 <strong className={customStyles["tag-date"]}>{moment(elem.Birthday01).locale(currentLocale).format("dddd DD")}</strong>
                                 <UserProfileCard 
                                     Birthday01={elem.Birthday01} 

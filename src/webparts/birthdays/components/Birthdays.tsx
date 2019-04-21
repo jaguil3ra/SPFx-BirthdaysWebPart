@@ -4,7 +4,7 @@ import { IBirthdaysProps } from './IBirthdaysProps';
 import { escape } from '@microsoft/sp-lodash-subset';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { Button } from 'office-ui-fabric-react/lib/Button';
-import { getUserBySearch } from '../service/UtilsService';
+import { utilsService } from '../service/UtilsService';
 import UserProfileCard from './UserProfileCard';
 import  { BirthdayModal } from './BirthdaysModal';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
@@ -41,7 +41,7 @@ export default class Birthdays extends React.Component<IBirthdaysProps, {}> {
 
   //Method let me call searchService
   private _loadUsers = (range:Range,month?:number):void=>{
-    getUserBySearch(this.props.spHttp, (items:Array<IUserServiceProps>)=>{ 
+    utilsService.getUserBySearch(this.props.spHttp, (items:Array<IUserServiceProps>)=>{ 
       items = items.sort((a,b) => (moment(a.Birthday01) > moment(b.Birthday01)) ? 1 : ((moment(b.Birthday01) > moment(a.Birthday01)) ? -1 : 0));
       if(range == Range.Week){
         this.setState({ 
@@ -153,7 +153,10 @@ export default class Birthdays extends React.Component<IBirthdaysProps, {}> {
                   <Button className={ this.state.isToday ? customStyles.light : customStyles.dark }  onClick={()=>{ this._changeToWeek()}}><Icon iconName="CalendarWeek" /> {strings.ButtonWeek}</Button>              
                   </div>
                   <div className="ms-Grid-col ms-md4 ms-hiddenSm">
-                    <Button className={customStyles.light}  style={ {float:"right"}} onClick={()=>{ this._openModal() }} > <Icon iconName="GroupedList"></Icon> {strings.ButtonMore}</Button>
+                    { this.props.birthdayProps.enableButtonSeeMore 
+                      ? <Button className={customStyles.light}  style={ {float:"right"}} onClick={()=>{ this._openModal() }} > <Icon iconName="GroupedList"></Icon> {strings.ButtonMore}</Button>
+                      :""
+                    }
                   </div>                
               </div>
             </div>  

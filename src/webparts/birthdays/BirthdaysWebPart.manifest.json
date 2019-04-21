@@ -15,7 +15,8 @@
     "properties": {
       "title": "Birthdays",
       "pictureSize":14,
-      "showJobTitle":true
+      "showJobTitle":true,
+      "enableButtonSeeMore":true
     }
   }]
 }

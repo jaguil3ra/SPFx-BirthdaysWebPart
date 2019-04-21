@@ -63,6 +63,10 @@ export default class BirthdaysWebPart extends BaseClientSideWebPart<IBirthdaysWe
                 PropertyPaneCheckbox('showDepartament', {
                   text: strings.DescriptionPropertyShowDepartament,
                   checked:false
+                }),  
+                PropertyPaneCheckbox('enableButtonSeeMore', {
+                  text: strings.DescriptionPropertyEnableSeeMore,
+                  checked:true
                 }),                  
   
                 new PropertyPaneCredits()                                              
